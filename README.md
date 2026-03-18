@@ -31,6 +31,11 @@ This is a known restriction for trial accounts, as outlined in Snowflake's offic
   <img width="264" height="96" alt="image" src="https://github.com/user-attachments/assets/88d33c8a-5066-47a8-8387-bb4820ac3d36" />
   <img width="941" height="528" alt="image" src="https://github.com/user-attachments/assets/3c26f063-b0e7-49be-926c-a825c2985c3a" />
 
+  5 step:
+  - created structure and test every step in Snowflake (because I couldn't connect dbt and Sf)
+    <img width="1073" height="518" alt="image" src="https://github.com/user-attachments/assets/4629a016-0f7f-446b-b54c-cd3366c92c08" />
+
+
 
 
 
