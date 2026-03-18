@@ -65,8 +65,12 @@ This is a known restriction for trial accounts, as outlined in Snowflake's offic
     Leads per Active Listing = Total Leads / Active Listings
 
       where Active Listings are listings created within the last 4 mounths.
+  <img width="1289" height="697" alt="image" src="https://github.com/user-attachments/assets/5bb74f1a-41ff-4633-a1c4-7d7cbc4669ec" />
+  <img width="2083" height="721" alt="image" src="https://github.com/user-attachments/assets/182d78f4-66d9-45e0-a98e-e6a30b822620" />
+
 
 Result structire:
+```
 📦 AVIV_group_dev
 ├── 📁 data/ # Generated CSV files
 │ ├── synthetic_listings.csv
@@ -88,6 +92,9 @@ Result structire:
 ├── 📄 README.md # Documentation
 ├── 📄 s3_stage.sql # S3 to Snowflake ingestion
 └── 📄 generate_data.ipynb # Synthetic data generation
+```
 
 P.S. All calculations and tests were validated directly in Snowflake
+  <img width="1359" height="686" alt="image" src="https://github.com/user-attachments/assets/3fd03eeb-47d8-4436-86c2-d6b76252d3ee" />
+
 
