@@ -1,5 +1,19 @@
 # AVIV_group_test
 
+## **Project Overview**
+This project demonstrates the process of transforming raw real estate data (listings and leads) into **business metrics** using a modern stack: **AWS S3 → Snowflake → dbt**.
+
+**Key Metric:**  
+*Leads per Active Listing* by property type and region.
+
+### Components:
+1. **AWS S3** — storage for raw CSV files (`synthetic_listings.csv`, `synthetic_leads.csv`)
+2. **Snowflake** — data ingestion via `COPY INTO` (see `s3_stage.sql`)
+3. **dbt Core** — data transformation, testing, and documentation
+4. **GitHub** — version control and collaboration
+
+   All steps:
+
 Firs step:
 - generated data , 2 csv files with synthetic data - synthetic_listings.csv and synthetic_leads.csv
 script - generate_data.ipynb
@@ -31,11 +45,49 @@ This is a known restriction for trial accounts, as outlined in Snowflake's offic
   <img width="264" height="96" alt="image" src="https://github.com/user-attachments/assets/88d33c8a-5066-47a8-8387-bb4820ac3d36" />
   <img width="941" height="528" alt="image" src="https://github.com/user-attachments/assets/3c26f063-b0e7-49be-926c-a825c2985c3a" />
 
-  5 step:
-  - created structure and test every step in Snowflake (because I couldn't connect dbt and Sf)
-    <img width="1073" height="518" alt="image" src="https://github.com/user-attachments/assets/4629a016-0f7f-446b-b54c-cd3366c92c08" />
+5 step:
+- created structure and test every step in Snowflake (because I couldn't connect dbt and Sf)
+  <img width="1073" height="518" alt="image" src="https://github.com/user-attachments/assets/4629a016-0f7f-446b-b54c-cd3366c92c08" />
 
+6 step:
+- created transformation (dbt) using Staging Layer (models/staging/) and  Mart Layer (models/marts/)
+  Data type casting, NULL value filtering, Derived fields calculation (is_active, days_to_lead), Value normalization
+  Aggregation by property type and region, Key metric Leads per Active Listing calculation, Conversion categorization (High/Medium/Low/No leads)
+- created data quality testing
+  All tests are defined in schema.yml and include:
+  - Uniqueness (unique) — on listing_id, contact_id
+  - NOT NULL — on key fields
+  - Referential integrity (relationships) — leads to listings
+  - Accepted values (accepted_values) — for property_type, contact_source
+  - Price range (dbt_utils.accepted_range) — 0–10M
+  - Freshness (freshness) — ingestion monitoring
+- calculated the business metric: Leads per Active Listing
+    Leads per Active Listing = Total Leads / Active Listings
 
+      where Active Listings are listings created within the last 4 mounths.
 
+Result structire:
+📦 AVIV_group_dev
+├── 📁 data/ # Generated CSV files
+│ ├── synthetic_listings.csv
+│ └── synthetic_leads.csv
+├── 📁 models/ # dbt models
+│ ├── 📁 staging/ # Staging layer
+│ │ ├── schema.yml # Tests and documentation
+│ │ ├── stg_listings.sql # Listings cleaning
+│ │ └── stg_leads.sql # Leads cleaning
+│ └── 📁 marts/ # Data marts
+│ ├── schema.yml # Mart tests
+│ └── leads_per_listing.sql # Key metric
+├── 📁 snapshots/ # SCD Type 2 (history tracking)
+│ └── listings_snapshot.sql
+├── 📁 tests/ # Custom tests
+│ └── assert_positive_leads.sql
+├── 📄 .gitignore # Excludes sensitive files
+├── 📄 dbt_project.yml # dbt configuration
+├── 📄 README.md # Documentation
+├── 📄 s3_stage.sql # S3 to Snowflake ingestion
+└── 📄 generate_data.ipynb # Synthetic data generation
 
+P.S. All calculations and tests were validated directly in Snowflake
 
