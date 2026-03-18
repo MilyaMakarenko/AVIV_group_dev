@@ -12,7 +12,7 @@ This project demonstrates the process of transforming raw real estate data (list
 3. **dbt Core** — data transformation, testing, and documentation
 4. **GitHub** — version control and collaboration
 
-   All steps:
+## All steps:
 
 Firs step:
 - generated data , 2 csv files with synthetic data - synthetic_listings.csv and synthetic_leads.csv
