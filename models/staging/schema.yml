@@ -1,0 +1,60 @@
+version: 1
+
+sources:
+  - name: raw
+    database: AVIV_TEST
+    schema: PUBLIC
+    tables:
+      - name: listings
+        freshness:
+          warn_after: {count: 24, period: hour}
+          error_after: {count: 48, period: hour}
+        loaded_at_field: created_at
+      - name: leads
+        freshness:
+          warn_after: {count: 6, period: hour}
+          error_after: {count: 24, period: hour}
+        loaded_at_field: contact_timestamp
+
+models:
+  - name: stg_listings
+    description: "Cleaned and standardized listing data"
+    columns:
+      - name: listing_id
+        description: "Unique identifier for the listing"
+        tests:
+          - unique
+          - not_null
+      - name: property_type
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['apartment', 'house', 'studio', 'loft', 'duplex']
+      - name: price
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 10000000
+      - name: is_active
+        tests:
+          - not_null
+
+  - name: stg_leads
+    description: "Cleaned leads data"
+    columns:
+      - name: contact_id
+        tests:
+          - unique
+          - not_null
+      - name: listing_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_listings')
+              field: listing_id
+      - name: contact_source
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['organic', 'paid', 'partner']

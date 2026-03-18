@@ -1,0 +1,16 @@
+version: 1
+
+models:
+  - name: leads_per_listing
+    description: "Mart for calculating the average number of leads per active listing by property type and region"
+    columns:
+      - name: property_type
+        tests:
+          - not_null
+      - name: region
+        tests:
+          - not_null
+      - name: leads_per_active_listing
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
