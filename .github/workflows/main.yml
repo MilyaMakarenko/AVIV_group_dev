@@ -1,0 +1,111 @@
+name: Run dbt and Validate Mart Table
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - staging
+      - main
+  push:
+    branches:
+      - staging
+      - main
+
+jobs:
+  run_dbt_and_validate:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
+    runs-on: ubuntu-latest
+
+    env:
+      SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+      SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+      SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+      SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
+      SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
+      SNOWFLAKE_DATABASE: AVIV_TEST
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set environment
+        run: |
+          TARGET_BRANCH="${GITHUB_BASE_REF:-${GITHUB_REF#refs/heads/}}"
+          
+          if [[ $TARGET_BRANCH == "staging" ]]; then
+            echo "DBT_TARGET=staging" >> $GITHUB_ENV
+          elif [[ $TARGET_BRANCH == "main" ]]; then
+            echo "DBT_TARGET=prod" >> $GITHUB_ENV
+          else
+            echo "Unexpected branch: $TARGET_BRANCH"
+            exit 1
+          fi
+
+      - name: Install Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dbt
+        run: |
+          pip install dbt-snowflake
+
+      - name: Configure dbt profile
+        run: |
+          mkdir -p ~/.dbt
+          cat > ~/.dbt/profiles.yml << EOF
+          aviv_project:
+            target: ${{ env.DBT_TARGET }}
+            outputs:
+              staging:
+                type: snowflake
+                account: ${{ env.SNOWFLAKE_ACCOUNT }}
+                user: ${{ env.SNOWFLAKE_USER }}
+                password: ${{ env.SNOWFLAKE_PASSWORD }}
+                role: ${{ env.SNOWFLAKE_ROLE }}
+                warehouse: ${{ env.SNOWFLAKE_WAREHOUSE }}
+                database: ${{ env.SNOWFLAKE_DATABASE }}
+                schema: ANALYTICS_STAGING
+                threads: 4
+              prod:
+                type: snowflake
+                account: ${{ env.SNOWFLAKE_ACCOUNT }}
+                user: ${{ env.SNOWFLAKE_USER }}
+                password: ${{ env.SNOWFLAKE_PASSWORD }}
+                role: ${{ env.SNOWFLAKE_ROLE }}
+                warehouse: ${{ env.SNOWFLAKE_WAREHOUSE }}
+                database: ${{ env.SNOWFLAKE_DATABASE }}
+                schema: ANALYTICS
+                threads: 4
+          EOF
+
+      - name: Install dbt dependencies
+        run: dbt deps
+
+      - name: Run dbt models
+        run: dbt run --target ${{ env.DBT_TARGET }}
+
+      - name: Install SnowflakeCLI
+        uses: snowflakedb/snowflake-cli-action@v1.5
+        with:
+          cli-version: "latest"
+          default-config-file-path: "config.toml"
+
+      - name: Verify mart table is not empty
+        run: |
+          RESULT=$(snow sql -q "SELECT COUNT(*) FROM AVIV_TEST.ANALYTICS.LEADS_PER_LISTING;" \
+            --account ${{ env.SNOWFLAKE_ACCOUNT }} \
+            --user ${{ env.SNOWFLAKE_USER }} \
+            --password ${{ env.SNOWFLAKE_PASSWORD }} \
+            --output format=csv)
+          
+          ROW_COUNT=$(echo $RESULT | tail -n 1 | tr -d '[:space:]')
+          
+          echo "Row count: $ROW_COUNT"
+          
+          if [ "$ROW_COUNT" -eq 0 ]; then
+            echo "Table AVIV_TEST.ANALYTICS.LEADS_PER_LISTING is EMPTY!"
+            exit 1
+          else
+            echo "Table contains $ROW_COUNT rows"
+          fi
