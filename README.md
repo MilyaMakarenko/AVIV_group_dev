@@ -28,12 +28,20 @@ Third step:
 - Raw CSV files were uploaded to S3  and loaded into Snowflake using `COPY INTO` commands with a storage integration for secure cross-account access.
   <img width="1871" height="665" alt="image" src="https://github.com/user-attachments/assets/7d023396-d82b-4b4a-8aef-402e7137805a" />
   <img width="922" height="533" alt="image" src="https://github.com/user-attachments/assets/9286bedf-ebce-4f69-939b-9c17a5d4be7b" />
+  I made pipes too
+  <img width="962" height="111" alt="image" src="https://github.com/user-attachments/assets/096355af-1c1f-4f21-ab97-1474c66f756f" />
+  <img width="1046" height="137" alt="image" src="https://github.com/user-attachments/assets/0076c9d2-fd62-4fea-b225-4f16b62671d3" />
+
+  <img width="377" height="206" alt="image" src="https://github.com/user-attachments/assets/526493ab-b21f-433c-a0a4-e51bb80ea326" />
+
+
+
 
 4 step:
 - During this take-home assignment, I encountered limitations with my Snowflake trial account, which blocks external connections by default (connecting via dbt Core from a local machine). 
 This is a known restriction for trial accounts, as outlined in Snowflake's official documentation: external access is often disabled for trial environments.
-<img width="491" height="130" alt="image" src="https://github.com/user-attachments/assets/96914e2c-5cac-442b-bd66-b564c886164c" />
-<img width="531" height="160" alt="image" src="https://github.com/user-attachments/assets/a84abba9-0320-4487-a41e-787b8ce87a25" />
+  <img width="491" height="130" alt="image" src="https://github.com/user-attachments/assets/96914e2c-5cac-442b-bd66-b564c886164c" />
+  <img width="531" height="160" alt="image" src="https://github.com/user-attachments/assets/a84abba9-0320-4487-a41e-787b8ce87a25" />
 
 
 
