@@ -8,10 +8,18 @@
             unique_key='listing_id',
             strategy='check',
             check_cols=['price', 'region', 'city'],
-            invalidate_hard_deletes=True
+            invalidate_hard_deletes=True,
+            updated_at='snapshot_timestamp'
         )
     }}
 
-    select * from {{ ref('stg_listings') }}
+    select 
+        listing_id,
+        property_type,
+        price,
+        furnished_flag,
+        current_timestamp as snapshot_timestamp,
+        _loaded_at 
+    from {{ ref('stg_listings') }}
 
 {% endsnapshot %}
