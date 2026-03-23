@@ -20,7 +20,7 @@ models:
   aviv_test:
     staging:
       +materialized: view
-      +schema: staging
+      +schema: dbt
     marts:
       +materialized: table
       +schema: analytics
