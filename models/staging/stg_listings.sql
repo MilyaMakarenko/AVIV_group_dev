@@ -1,7 +1,15 @@
 -- clean and transform raw listings data for staging layer
 
 with source as (
-    select * from {{ source('raw', 'listings') }}
+    select listing_id,
+            property_type,
+            city,
+            region,
+            price,
+            created_at,
+            updated_at,
+            agent_id
+    from {{ source('raw', 'listings') }}
 ),
 
 casted as (
