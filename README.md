@@ -46,6 +46,7 @@ Third step:
 4 step:
 - During this take-home assignment, I encountered limitations with my Snowflake trial account, which blocks external connections by default (connecting via dbt Core from a local machine). 
 This is a known restriction for trial accounts, as outlined in Snowflake's official documentation: external access is often disabled for trial environments.
+
   <img width="467" height="120" alt="image" src="https://github.com/user-attachments/assets/dd050027-9596-432a-bce1-a1fa355ddf1f" />
 
   <img width="538" height="123" alt="image" src="https://github.com/user-attachments/assets/5c0f7655-7dc4-4b2d-baec-14e7be1a418a" />
