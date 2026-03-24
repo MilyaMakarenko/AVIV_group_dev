@@ -17,7 +17,8 @@ This project demonstrates the process of transforming raw real estate data (list
 Firs step:
 - generated data , 2 csv files with synthetic data - synthetic_listings.csv and synthetic_leads.csv
 script - generate_data.ipynb
-  <img width="975" height="304" alt="image" src="https://github.com/user-attachments/assets/a905cf90-a9bf-433c-aeb9-80f5eb3fc3ff" />
+  <img width="545" height="291" alt="image" src="https://github.com/user-attachments/assets/b9b271b4-7595-4242-9610-3d5134377f49" />
+
   <img width="898" height="221" alt="image" src="https://github.com/user-attachments/assets/99fa5f1d-7115-4ea3-8711-2e0868f7927d" />
 
 
