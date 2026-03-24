@@ -4,7 +4,7 @@ with source as (
     select listing_id,
             property_type,
             city,
-            region,
+            "region",
             price,
             created_at,
             updated_at,
