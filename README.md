@@ -30,6 +30,8 @@ Secont step:
 
 Third step:
 - Raw CSV files were uploaded to S3  and loaded into Snowflake using `COPY INTO` commands with a storage integration for secure cross-account access.
+  <img width="1548" height="467" alt="image" src="https://github.com/user-attachments/assets/06bd7b97-7726-4ea2-a0d6-bed1bb534c02" />
+
   <img width="1871" height="665" alt="image" src="https://github.com/user-attachments/assets/7d023396-d82b-4b4a-8aef-402e7137805a" />
   <img width="922" height="533" alt="image" src="https://github.com/user-attachments/assets/9286bedf-ebce-4f69-939b-9c17a5d4be7b" />
 - I made pipes too
