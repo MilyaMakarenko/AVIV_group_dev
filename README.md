@@ -18,11 +18,14 @@ Firs step:
 - generated data , 2 csv files with synthetic data - synthetic_listings.csv and synthetic_leads.csv
 script - generate_data.ipynb
   <img width="975" height="304" alt="image" src="https://github.com/user-attachments/assets/a905cf90-a9bf-433c-aeb9-80f5eb3fc3ff" />
+  <img width="898" height="221" alt="image" src="https://github.com/user-attachments/assets/99fa5f1d-7115-4ea3-8711-2e0868f7927d" />
+
 
 
 Secont step:
 - added data to a S3 bucket (!!! using WEB interface)
-  <img width="1685" height="660" alt="image" src="https://github.com/user-attachments/assets/14530b03-974e-4434-91b6-1608d9b4df1e" />
+  <img width="1079" height="690" alt="image" src="https://github.com/user-attachments/assets/b58a5540-f318-4bb2-b6f2-daaa62bf1b0f" />
+
 
 Third step:
 - Raw CSV files were uploaded to S3  and loaded into Snowflake using `COPY INTO` commands with a storage integration for secure cross-account access.
