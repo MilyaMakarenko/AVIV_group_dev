@@ -1,7 +1,11 @@
 -- cleaned and transformed leads data 
 
 with source as (
-    select * from {{ source('raw', 'leads') }}
+    select contact_id,
+            listing_id,
+            contact_source,
+            contact_timestamp
+    from {{ source('raw', 'leads') }}
 ),
 
 casted as (
