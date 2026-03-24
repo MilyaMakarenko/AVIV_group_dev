@@ -104,7 +104,8 @@ Result structire:
 
 P.S. All calculations and tests were validated directly in Snowflake
   <img width="1359" height="686" alt="image" src="https://github.com/user-attachments/assets/3fd03eeb-47d8-4436-86c2-d6b76252d3ee" />
-
+  
+  My layers
   <img width="1657" height="796" alt="image" src="https://github.com/user-attachments/assets/54f45d33-108e-4d79-9a93-55f44c16a7d1" />
 
 
